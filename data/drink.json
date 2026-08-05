@@ -1,35 +1,35 @@
 
+[
+    {
+        "drink_name": "coke",
+        "category": "soda",
+        "available_sizes": [
+    {
+        "size": "Small",
+        "price": 1.50
+    },
 
-{
-    "drink_name": "coke",
-    "category": "soda",
-    "available_sizes": [
-{
-    "size": "Small",
-    "price": 1.50
-},
-
-{
-   "size": "large",
-    "price": 2.99
-}
-    ]
-}
+    {
+    "size": "large",
+        "price": 2.99
+    }
+        ]
+    },
 
 
-{
-    "drink_name": "sprite",
-    "category": "soda",
-    "available_sizes": [
-{
-    "size": "Small",
-    "price": 1.50
-},
+    {
+        "drink_name": "sprite",
+        "category": "soda",
+        "available_sizes": [
+    {
+        "size": "Small",
+        "price": 1.50
+    },
 
-{
-   "size": "large",
-    "price": 2.99
-}
-    ]
-}
-
+    {
+    "size": "large",
+        "price": 2.99
+    }
+        ]
+    }
+]
