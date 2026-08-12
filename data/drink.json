@@ -1,7 +1,7 @@
 
 [
     {
-        "drink_name": "coke",
+        "drink_name": "Coke",
         "category": "soda",
         "available_sizes": [
     {
@@ -10,7 +10,13 @@
     },
 
     {
-    "size": "large",
+        "size": "medium",
+        "price": 2.50
+    },
+
+
+    {
+        "size": "large",
         "price": 2.99
     }
         ]
@@ -18,7 +24,29 @@
 
 
     {
-        "drink_name": "sprite",
+        "drink_name": "Sprite",
+        "category": "soda",
+        "available_sizes": [
+    {
+        "size": "Small",
+        "price": 1.50
+    },
+
+ {
+        "size": "medium",
+        "price": 2.50
+    },
+
+    {
+        "size": "large",
+        "price": 2.99
+    }
+        ]
+    },
+
+
+    {
+        "drink_name": "Pepsi",
         "category": "soda",
         "available_sizes": [
     {
@@ -27,9 +55,39 @@
     },
 
     {
-    "size": "large",
+        "size": "medium",
+        "price": 2.50
+    },
+
+
+    {
+        "size": "large",
         "price": 2.99
     }
         ]
+    },
+
+
+   {
+        "drink_name": "Water",
+        "category": "soda",
+        "available_sizes": [
+    {
+        "size": "Small",
+        "price": 1.00
+    },
+
+    {
+        "size": "medium",
+        "price": 2.00
+    },
+
+
+    {
+        "size": "large",
+        "price": 2.50
     }
+        ]
+    }
+
 ]

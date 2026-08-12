@@ -1,0 +1,119 @@
+[
+    
+        {
+        "pizza_name": "Pepperoni",
+        "category": "pizza",
+        "available_sizes": [
+    {
+        "size": "Small",
+        "price": 5.99
+    },
+
+    {
+        "size": "medium",
+        "price": 7.99
+    },
+
+
+    {
+        "size": "large",
+        "price": 9.99
+    },
+
+      {
+        "size": "X-tra large",
+        "price": 14.99
+    }
+
+         ]
+    },
+
+
+    {
+        "pizza_name": "Cheesy Garlic",
+        "category": "pizza",
+        "available_sizes": [
+    {
+        "size": "Small",
+        "price": 5.99
+    },
+
+    {
+        "size": "medium",
+        "price": 7.99
+    },
+
+
+    {
+        "size": "large",
+        "price": 9.99
+    },
+
+      {
+        "size": "X-tra large",
+        "price": 14.99
+    }
+        ]
+    },
+
+
+    {
+        "pizza_name": "Meat lovers",
+        "category": "pizza",
+        "available_sizes": [
+    {
+        "size": "Small",
+        "price": 5.99
+    },
+
+    {
+        "size": "medium",
+        "price": 7.99
+    },
+
+
+    {
+        "size": "large",
+        "price": 9.99
+    },
+
+      {
+        "size": "X-tra large",
+        "price": 14.99
+    }
+        ]
+    },
+
+
+   {
+        "pizza_name": "Ham n cheese",
+        "category": "pizza",
+        "available_sizes": [
+    {
+        "size": "Small",
+        "price": 5.99
+    },
+
+    {
+        "size": "medium",
+        "price": 7.99
+    },
+
+
+    {
+        "size": "large",
+        "price": 9.99
+    },
+
+      {
+        "size": "X-tra large",
+        "price": 14.99
+    }
+        ]
+    }
+
+ 
+
+
+
+]

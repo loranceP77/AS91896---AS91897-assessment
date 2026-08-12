@@ -29,11 +29,23 @@ def load_pizza_data():
         
     return pizza
     
+def load_sides_data():
+    try:
+        with open('data/sides.json') as file:
+            sides = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Error loading sides data: {e}")
+        sides = {}
+        
+    return sides
+    
+    
 @app.route('/')
 def index():
     drink = load_drink_data()
     pizza = load_pizza_data()
-    return render_template("index.html", drink=drink, pizza=pizza)
+    sides = load_sides_data()
+    return render_template("index.html", drink=drink, pizza=pizza, sides=sides)
     
 @app.route('/base')
 def base():
