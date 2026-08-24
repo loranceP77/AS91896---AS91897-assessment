@@ -5,7 +5,7 @@ import sqlite3
 from flask import Flask, render_template, request, session, flash, redirect, url_for
 
 app = Flask(__name__)
-app,secret_key = 'sanfrancisco'
+app.secret_key = 'sanfrancisco'
 
 
 
@@ -40,33 +40,24 @@ def load_sides_data():
     return sides
     
     
-@app.route('/')
+@app.route("/")
 def index():
-    drink = load_drink_data()
-    pizza = load_pizza_data()
-    sides = load_sides_data()
-    return render_template("index.html", drink=drink, pizza=pizza, sides=sides)
+    return render_template("index.html")
     
 @app.route('/base')
 def base():
     return render_template("base.html")
 
+@app.route('/menu')
+def menu():
+    return render_template("menu.html")
 
 
-
-        
+@app.route('/order')
+def order():
+    return render_template("order.html")        
     
-
     
-    
-    
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
