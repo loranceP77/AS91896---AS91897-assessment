@@ -1,0 +1,45 @@
+body {
+
+    background-color:aliceblue ;
+
+}
+
+#title {
+  font-family: "Petit Formal Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+
+}
+
+/* nav bar styling */
+nav {
+  border: rgb(114, 190, 190) 5px solid;
+  display: flex;
+  font-size: 20px;
+  justify-content: space-evenly;
+  font-family: "Tilt Neon", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "XROT" 0,
+    "YROT" 0;
+  padding: 5px;
+  margin: 5px 0px;
+}
+
+nav a:link {
+  text-decoration: none;
+}
+nav a:hover {
+  color:rgb(62, 75, 86);
+  font-size: larger;
+}
+
+p {
+  font-family: "Petit Formal Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
