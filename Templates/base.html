@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> {% block title %}Dream Pizzas{% endblock %} </title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-    <!-- Font embeds -->
+    <title>{% block title %}Dream Pizzas{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
-
 </head>
 <body>
+
+    <header>
+        <div class="title">Dream Pizzas</div>
+        <div class="phone_number">021 000 000</div>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('menu') }}">Menu</a>
+        <a href="{{ url_for('order') }}">Order</a>
+    </nav>
+
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <nav>
-        <a href="{{url_for('index') }}">Home</a>
-        <a href="{{url_for('menu') }}">Menu</a>
-        <a href="{{url_for('order') }}">Order</a>
-    </nav>
-
-<footer>
-    <p>&copy;Dream Pizzas</p>
-</footer>
+    <footer>
+        &copy; Dream Pizzas
+    </footer>
 
 </body>
 </html>

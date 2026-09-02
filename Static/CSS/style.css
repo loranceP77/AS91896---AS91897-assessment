@@ -1,22 +1,20 @@
 body {
-
-    background-color:rgb(235, 230, 137) ;
+  background-color:rgba(246, 229, 197) ;
 
 }
 
-#title {
+.title {
   font-family: "Petit Formal Script", cursive;
   font-weight: 400;
   font-style: normal;
-  position: absolute ;
   font-size: 30px;
-  margin: 5px 10px 10px 10px;
+  margin: 5px 0 0px 10px;
 
 }
-#phone_number {
-  position: absolute;
-  margin: 40px 10px 10px 20px;
-  font-size: 25px;
+
+.phone_number {
+  margin: 0px 0 15px 10px;
+  font-size: 30px;
   font-family: "Tilt Neon", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -53,9 +51,50 @@ nav a:hover {
 }
 
 p {
-  font-family: "Petit Formal Script", cursive;
+  font-family: "Actor", sans-serif;
   font-weight: 400;
   font-style: normal;
+  font-size: 25px;
+  text-align: center;
 }
 
 
+.pizza_display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px; /* Controls gap right below the text */
+}
+
+.pizza_display img {
+    max-width: 400px;
+    height: auto;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+}
+
+.pizza_display img:hover {
+    transform: scale(1.1) rotate(360deg);
+}
+
+
+footer {
+  font-family: "Tilt Neon", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "XROT" 0,
+    "YROT" 0;
+  text-align: center;
+  font-size: 35px;
+}
+
+#dream {
+  font-size: 65px;
+  color:#e63f02;
+  font-family: "Doppio One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+}

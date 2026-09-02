@@ -2,34 +2,42 @@
 
 {% block title %} Home - Dream Pizzas {% endblock %}
 
+
+
 {% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap" rel="stylesheet">
-    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Actor&family=Doppio+One&family=Petit+Formal+Script&family=Tilt+Neon&display=swap" rel="stylesheet">
 </head>
 
-<header id="title">Dream Pizzas </header>
-<p id="phone_number"> 022 123 4567</p>
+
+
 
 <body>
+ 
+    
+    
     <main>
 
-    <div class="pizza_display">
-        
-        
+         <p id=dream>PIZZAS YOU <br>DREAM OF</p>
 
+    <div class="pizza_display">
+        <img src="{{ url_for('static', filename='images/pizza.png') }}" alt="pizza-img">
+        
     </div>
    
+
+   
+
     </main>
 </body>
 
