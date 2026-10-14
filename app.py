@@ -15,7 +15,7 @@ def load_drink_data():
             drink = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error loading drink data: {e}")
-        drink = {}
+        drink = []
         
     return drink
 
@@ -25,7 +25,7 @@ def load_pizza_data():
             pizza = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error loading pizza data: {e}")
-        pizza = {}
+        pizza = []
         
     return pizza
     
@@ -35,9 +35,26 @@ def load_sides_data():
             sides = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Error loading sides data: {e}")
-        sides = {}
+        sides = []
         
     return sides
+    
+def initialise_database():
+    with sqlite3.connect(order.db) as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS orders (
+            order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            invoice_number TEXT,
+            customer_name,
+            pizza TEXT,
+            drink TEXT,
+            side TEXT,
+            total REAL,
+            date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+                       ''')
+        conn.commit()
     
     
 @app.route("/")
@@ -57,6 +74,17 @@ def menu():
 def order():
     return render_template("order.html")        
     
+    
+    
+@app.route('/checkout')
+
+@app.route('/add_drink', methods=["POST"])
+def add_drink():
+    
+@app.route('/add_sides', methods=["POST"])   
+    
+@
+app.route('/add_pizza', methods=["POST"])
     
 
 if __name__ == '__main__':

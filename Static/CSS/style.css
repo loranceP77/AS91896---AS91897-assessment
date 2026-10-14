@@ -7,14 +7,15 @@ body {
   font-family: "Petit Formal Script", cursive;
   font-weight: 400;
   font-style: normal;
-  font-size: 30px;
+  font-size: 80px;
   margin: 5px 0 0px 10px;
-
+  text-align: center;
+  user-select: none;
 }
 
 .phone_number {
   margin: 0px 0 15px 10px;
-  font-size: 30px;
+  font-size: 45px;
   font-family: "Tilt Neon", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -22,9 +23,10 @@ body {
   font-variation-settings:
     "XROT" 0,
     "YROT" 0;
-}
+  text-align: center;
+  }
 
-/* nav bar styling */
+
 nav {
   display: flex;
   color: rgb(167, 65, 28);
@@ -39,6 +41,7 @@ nav {
     "YROT" 0;
   padding: 5px;
   margin: 20px 0px;
+  user-select: none;
 }
 
 nav a:link {
@@ -63,11 +66,12 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px; /* Controls gap right below the text */
+    margin-top: -35px;
 }
 
 .pizza_display img {
-    max-width: 400px;
+    width: 550px;
+    max-width: 550px;
     height: auto;
     transition: transform 0.5s ease;
     cursor: pointer;
@@ -94,7 +98,61 @@ footer {
   font-size: 65px;
   color:#e63f02;
   font-family: "Doppio One", sans-serif;
-  font-weight: 400;
+  font-weight: 900;
   font-style: normal;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  line-height: 1.1;
+  user-select: none;
+}
+
+
+.dropdown button {
+  background-color: #e63f02;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+
+}
+
+
+.dropdown a {
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding: 10px 15px;
+
+}
+
+.dropdown .content {
+  position: absolute;
+  background-color: hsl(0, 0%, 95%);
+  min-width: 100px;
+  box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.8);
+  display: none;
+
+}
+
+.dropdown:hover .content{
+  display: block;
+
+}
+
+.dropdown:hover button {
+  background-color: hsl(0, 0%, 70%);
+
+}
+
+.dropdown a:hover {
+  background-color: hsl(0, 0%, 90%);
+
+}
+
+.dropdown {
+  display: inline-block;
+
 
 }

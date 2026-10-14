@@ -9,16 +9,22 @@
 </head>
 <body>
 
+
+    <div class="dropdown">
+        <button>Nav</button>
+        <div class="content">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('menu') }}">Menu</a>
+            <a href="{{ url_for('order') }}">Order</a>
+                </div>  
+        </div>
+
+
     <header>
         <div class="title">Dream Pizzas</div>
         <div class="phone_number">021 000 000</div>
     </header>
 
-    <nav>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('menu') }}">Menu</a>
-        <a href="{{ url_for('order') }}">Order</a>
-    </nav>
 
     <main>
         {% block content %}{% endblock %}
