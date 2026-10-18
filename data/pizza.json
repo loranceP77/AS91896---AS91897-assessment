@@ -1,73 +1,25 @@
 [
-    
-        {
+    {
         "pizza_name": "Dreami Pepperoni",
         "ingredients": [
             "Tomato Sauce",
             "Mozzarella Cheese",
             "Pepperoni",
             "Signature Dream Sauce"
-                       ],
+        ],
         "category": "pizza",
-        "available_sizes": [
-    {
-        "size": "Small",
-        "price": 5.99
+        "price": 8.50
     },
-
-    {
-        "size": "medium",
-        "price": 7.99
-    },
-
-
-    {
-        "size": "large",
-        "price": 9.99
-    },
-
-      {
-        "size": "X-tra large",
-        "price": 14.99
-    }
-
-         ]
-    },
-
-
     {
         "pizza_name": "Cheesy Wonder",
         "ingredients": [
             "Tomato Sauce",
             "Mozzarella Cheese",
             "Signature Dream Sauce"
-                       ],
+        ],
         "category": "pizza",
-        "available_sizes": [
-    {
-        "size": "Small",
-        "price": 5.99
+        "price": 8.50
     },
-
-    {
-        "size": "medium",
-        "price": 7.99
-    },
-
-
-    {
-        "size": "large",
-        "price": 9.99
-    },
-
-      {
-        "size": "X-tra large",
-        "price": 14.99
-    }
-        ]
-    },
-
-
     {
         "pizza_name": "Tropical Rest",
         "ingredients": [
@@ -76,34 +28,11 @@
             "Pineapple",
             "Ham",
             "Signature Dream Sauce"
-                       ],
+        ],
         "category": "pizza",
-        "available_sizes": [
+        "price": 8.50
+    },
     {
-        "size": "Small",
-        "price": 5.99
-    },
-
-    {
-        "size": "medium",
-        "price": 7.99
-    },
-
-
-    {
-        "size": "large",
-        "price": 9.99
-    },
-
-      {
-        "size": "X-tra large",
-        "price": 14.99
-    }
-        ]
-    },
-
-
-   {
         "pizza_name": "Meat Lovers Dream",
         "ingredients": [
             "Tomato Sauce",
@@ -112,34 +41,8 @@
             "Chicken",
             "Beef",
             "Signature Dream Sauce"
-                       ],
+        ],
         "category": "pizza",
-        "available_sizes": [
-    {
-        "size": "Small",
-        "price": 5.99
-    },
-
-    {
-        "size": "medium",
-        "price": 7.99
-    },
-
-
-    {
-        "size": "large",
-        "price": 9.99
-    },
-
-      {
-        "size": "X-tra large",
-        "price": 14.99
+        "price": 8.50
     }
-        ]
-    }
-
- 
-
-
-
 ]

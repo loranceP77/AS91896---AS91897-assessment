@@ -6,82 +6,212 @@
 {% block content %}
 
 
+<div class="menu-categories">
+    <button type="button" onclick="showSection('pizza-section')">
+        Pizza
+    </button>
 
-<div class="pizza-grid">
-    {% for item in pizza %}
+    <button type="button" onclick="showSection('sides-section')">
+        Sides
+    </button>
 
-        {% set image_file = 'pizza.png' %}
-        {% if item.pizza_name == 'Dreami Pepperoni' %}
-            {% set image_file = 'pepperoni.png' %}
-        {% elif item.pizza_name == 'Cheesy Wonder' %}
-            {% set image_file = 'cheesepizza.png' %}
-        {% elif item.pizza_name == 'Tropical Rest' %}
-            {% set image_file = 'hawaiian.png' %}
-        {% elif item.pizza_name == 'Meat Lovers Dream' %}
-            {% set image_file = 'meatlover.png' %}
-        {% endif %}
+    <button type="button" onclick="showSection('drinks-section')">
+        Drinks
+    </button>
+</div>
 
-        <div class="pizza-card">
-            <img
-                class="pizza-image"
-                src="{{ url_for('static', filename='images/' ~ image_file) }}"
-                alt="{{ item.pizza_name }}"
-            >
 
-            <h2>{{ item.pizza_name }}</h2>
 
-            <p class="pizza-price">
-                ${{ "%.2f"|format(item.available_sizes[0].price) }}
-                – ${{ "%.2f"|format(item.available_sizes[-1].price) }}
-            </p>
+<!-- PIZZA SECTION -->
+<section id="pizza-section" class="menu-section">
+    
 
-            <h3>Ingredients</h3>
-            <ul>
-                {% for ingredient in item.ingredients %}
-                    <li>{{ ingredient }}</li>
-                {% endfor %}
-            </ul>
+    <div class="pizza-grid">
+        {% for item in pizza %}
+            {% set image_file = 'pizza.png' %}
 
-            <form action="{{ url_for('add_pizza') }}" method="POST">
-                <label for="pizza-size-{{ loop.index }}">
-                    Choose size:
-                </label>
+            {% if item.pizza_name == 'Dreami Pepperoni' %}
+                {% set image_file = 'pepperoni.png' %}
+            {% elif item.pizza_name == 'Cheesy Wonder' %}
+                {% set image_file = 'cheesepizza.png' %}
+            {% elif item.pizza_name == 'Tropical Rest' %}
+                {% set image_file = 'hawaiian.png' %}
+            {% elif item.pizza_name == 'Meat Lovers Dream' %}
+                {% set image_file = 'meatlover.png' %}
+            {% endif %}
 
-                <select id="pizza-size-{{ loop.index }}"
-                        name="pizza_id" required>
-                    {% for select in item.available_sizes %}
-                        <option value="{{ item.pizza_name }}_{{ select.size }}_{{ select.price }}">
-                            {{ select.size }} - ${{ "%.2f"|format(select.price) }}
-                        </option>
+            <div class="pizza-card">
+                <img
+                    class="pizza-image"
+                    src="{{ url_for('static', filename='images/' ~ image_file) }}"
+                    alt="{{ item.pizza_name }}"
+                >
+
+                <h3>{{ item.pizza_name }}</h3>
+
+                <p class="pizza-price">
+                    ${{ "%.2f"|format(item.price|float) }}
+                </p>
+
+                <h4>Ingredients</h4>
+                <ul class="ingredients">
+                    {% for ingredient in item.ingredients %}
+                        <li>{{ ingredient }}</li>
                     {% endfor %}
-                </select>
+                </ul>
 
-                <button type="submit">Add to order</button>
-            </form>
-        </div>
+                <form action="{{ url_for('add_pizza') }}" method="POST">
+                    <input
+                        type="hidden"
+                        name="pizza_id"
+                        value="{{ item.pizza_name }}_{{ item.price }}"
+                    >
 
-    {% endfor %}
-</div>
+                    <label for="pizza-quantity-{{ loop.index }}">
+                        Quantity:
+                    </label>
+
+                    <input
+                        id="pizza-quantity-{{ loop.index }}"
+                        type="number"
+                        name="quantity"
+                        value="1"
+                        min="1"
+                        required
+                    >
+
+                    <button type="submit">Add to order</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</section>
 
 
-<div class="customer_cart">
-    <h2>Your Order</h2>
-    <h3>Pizzas</h3>
+<!-- SIDES SECTION -->
+<section id="sides-section" class="menu-section" hidden>
+    <h2>Sides</h2>
 
-    {% if cart_pizza %}
-        <ul>
-            {% for key, details in cart_pizza.items() %}
-                <li>
-                    <strong>{{ details['name'] }} ({{ details['size'] }})</strong>
-                    <p>Quantity: {{ details['quantity'] }}</p>
-                    <p>Price: ${{ "%.2f"|format(details['price']) }}</p>
-                    <p>Subtotal: ${{ "%.2f"|format(details['quantity'] * details['price']) }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No pizza added yet.</p>
-    {% endif %}
-</div>
+    <div class="sides-grid">
+        {% for item in sides %}
+            {% set image_file = 'garlicbread.png' %}
+
+            {% if item.side_name|lower == 'garlic bread' %}
+                {% set image_file = 'garlicbread.png' %}
+            {% elif item.side_name|lower == 'chips' %}
+                {% set image_file = 'chips.png' %}
+            {% elif item.side_name|lower == 'onion rings' %}
+                {% set image_file = 'onionrings.png' %}
+            {% elif item.side_name|lower == 'sauce' %}
+                {% set image_file = 'sauce.png' %}
+            {% endif %}
+
+            <div class="side-card">
+                <img
+                    src="{{ url_for('static', filename='images/' ~ image_file) }}"
+                    alt="{{ item.side_name }}"
+                >
+
+                <h3>{{ item.side_name }}</h3>
+                <p>${{ "%.2f"|format(item.price|float) }}</p>
+
+                <form action="{{ url_for('add_sides') }}" method="POST">
+                    <input
+                        type="hidden"
+                        name="sides_id"
+                        value="{{ item.side_name }}_{{ item.price }}"
+                    >
+
+                    <label for="sides-quantity-{{ loop.index }}">Quantity:</label>
+                    <input
+                        id="sides-quantity-{{ loop.index }}"
+                        type="number"
+                        name="quantity"
+                        value="1"
+                        min="1"
+                        required
+                    >
+
+                    <button type="submit">Add to order</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- DRINKS SECTION -->
+<section id="drinks-section" class="menu-section" hidden>
+    <h2>Drinks</h2>
+
+    <div class="drinks-grid">
+        {% for item in drink %}
+            {% set drink_name = item.drink_name[0] if item.drink_name is sequence and item.drink_name is not string else item.drink_name %}
+            {% set image_file = 'water.png' %}
+
+            {% if drink_name|lower == 'coke' %}
+                {% set image_file = 'coke.png' %}
+            {% elif drink_name|lower == 'sprite' %}
+                {% set image_file = 'sprite.png' %}
+            {% elif drink_name|lower == 'pepsi' %}
+                {% set image_file = 'pepsi.png' %}
+            {% elif drink_name|lower == 'water' %}
+                {% set image_file = 'water.png' %}
+            {% endif %}
+
+            <div class="drink-card">
+                <img
+                    src="{{ url_for('static', filename='images/' ~ image_file) }}"
+                    alt="{{ drink_name }}"
+                >
+
+                <h3>{{ drink_name }}</h3>
+
+                <form action="{{ url_for('add_drink') }}" method="POST">
+                    <label for="drink-size-{{ loop.index }}">
+                        Choose size:
+                    </label>
+
+                    <select id="drink-size-{{ loop.index }}"
+                            name="drink_id" required>
+                        {% for size_option in item.available_sizes %}
+                            {% set size_name = size_option.size[0] if size_option.size is sequence and size_option.size is not string else size_option.size %}
+                            {% set size_price = size_option.price[0] if size_option.price is sequence and size_option.price is not string else size_option.price %}
+
+                            <option value="{{ drink_name }}_{{ size_name }}_{{ size_price }}">
+                                {{ size_name }} - ${{ "%.2f"|format(size_price|float) }}
+                            </option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="drink-quantity-{{ loop.index }}">
+                        Quantity:
+                    </label>
+                    <input id="drink-quantity-{{ loop.index }}"
+                           type="number" name="quantity"
+                           value="1" min="1" required>
+
+                    <button type="submit">Add to order</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+<script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.menu-section').forEach(function(section) {
+            section.hidden = true;
+        });
+
+        const selectedSection = document.getElementById(sectionId);
+
+        if (selectedSection) {
+            selectedSection.hidden = false;
+        }
+    }
+</script>
+
 
 {% endblock %}

@@ -85,11 +85,20 @@ def menu():
                            )
 
 
+
 @app.route('/order')
 def order():
-    return render_template("order.html")        
+    cart_pizza = session.get('cart_pizza', {})
+    cart_drink = session.get('cart_drink', {})
+    cart_sides = session.get('cart_sides', {})
 
-
+    return render_template(
+        "order.html",
+        cart_pizza=cart_pizza,
+        cart_drink=cart_drink,
+        cart_sides=cart_sides
+    )
+      
 
 @app.route('/add_drink', methods=["POST"])
 def add_drink():
@@ -146,12 +155,10 @@ def add_sides():
     return redirect(url_for('menu'))  
     
 
-
-
 @app.route('/add_pizza', methods=["POST"])
 def add_pizza():
     pizza_info = request.form.get('pizza_id')
-    quantity = int(request.form.get('quantity', 1))
+    quantity = int(request.form.get('quantity', 5))
 
     cart_pizza = session.get('cart_pizza', {})
 
@@ -185,3 +192,4 @@ def add_pizza():
 
 if __name__ == '__main__':
     app.run(debug=True)
+

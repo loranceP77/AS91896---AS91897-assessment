@@ -3,3 +3,66 @@
 {% block title %}Menu - Dream Pizzas{% endblock %}
 
 {% block content %}
+
+<div class="customer_cart">
+    <h2>Your Order</h2>
+
+    {% set total = namespace(price=0) %}
+
+    <h3>Pizzas</h3>
+    {% if cart_pizza %}
+        {% for key, item in cart_pizza.items() %}
+            {% set subtotal = item.quantity * item.price %}
+            {% set total.price = total.price + subtotal %}
+
+            <p>
+                {{ item.name }} ({{ item.size }})<br>
+                Quantity: {{ item.quantity }}<br>
+                ${{ "%.2f"|format(item.price) }} each<br>
+                Subtotal: ${{ "%.2f"|format(subtotal) }}
+            </p>
+        {% endfor %}
+    {% else %}
+        <p>No pizzas added yet.</p>
+    {% endif %}
+
+    <h3>Drinks</h3>
+    {% if cart_drink %}
+        {% for key, item in cart_drink.items() %}
+            {% set subtotal = item.quantity * item.price %}
+            {% set total.price = total.price + subtotal %}
+
+            <p>
+                {{ item.name }} ({{ item.size }})<br>
+                Quantity: {{ item.quantity }}<br>
+                Subtotal: ${{ "%.2f"|format(subtotal) }}
+            </p>
+        {% endfor %}
+    {% else %}
+        <p>No drinks added yet.</p>
+    {% endif %}
+
+    <h3>Sides</h3>
+    {% if cart_sides %}
+        {% for key, item in cart_sides.items() %}
+            {% set subtotal = item.quantity * item.price %}
+            {% set total.price = total.price + subtotal %}
+
+            <p>
+                {{ item.name }}<br>
+                Quantity: {{ item.quantity }}<br>
+                Subtotal: ${{ "%.2f"|format(subtotal) }}
+            </p>
+        {% endfor %}
+    {% else %}
+        <p>No sides added yet.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Total: ${{ "%.2f"|format(total.price) }}</h2>
+
+    <a href="{{ url_for('menu') }}">Back to Menu</a>
+</div>
+
+{% endblock %}

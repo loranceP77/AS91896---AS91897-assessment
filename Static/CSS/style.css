@@ -189,3 +189,319 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+
+
+
+
+
+
+
+/* Sides and drinks: 2 columns */
+.sides-grid,
+.drinks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Side and drink cards */
+.side-card,
+.drink-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.side-card img,
+.drink-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.side-card input,
+.drink-card input,
+.drink-card select {
+    width: 100%;
+    max-width: 220px;
+    margin: 6px auto 12px;
+    box-sizing: border-box;
+}
+
+.side-card button,
+.drink-card button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Keep the grid usable on small screens */
+@media (max-width: 480px) {
+    .sides-grid,
+    .drinks-grid {
+        gap: 10px;
+    }
+
+    .side-card,
+    .drink-card {
+        padding: 8px;
+    }
+
+    .side-card img,
+    .drink-card img {
+        height: 110px;
+    }
+}
+
+
+
+
+/* ===== MENU CATEGORY BUTTONS ===== */
+.menu-categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 25px auto 35px;
+}
+
+.menu-categories button {
+    background: #b91c1c;
+    color: white;
+    border: 2px solid #b91c1c;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.menu-categories button:hover {
+    background: #8f1515;
+    border-color: #8f1515;
+    transform: translateY(-3px);
+}
+
+/* ===== ADD TO ORDER BUTTONS ===== */
+.pizza-card button,
+.side-card button,
+.drink-card button {
+    background: #198754;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.pizza-card button:hover,
+.side-card button:hover,
+.drink-card button:hover {
+    background: #12663e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+/* ===== DIALOG BUTTONS ===== */
+dialog button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+dialog button[type="submit"] {
+    background: #198754;
+    color: white;
+}
+
+dialog button[type="submit"]:hover {
+    background: #12663e;
+}
+
+dialog button[type="button"] {
+    background: #e5e7eb;
+    color: #333;
+}
+
+dialog button[type="button"]:hover {
+    background: #d1d5db;
+}
+
+/* ===== KEYBOARD ACCESSIBILITY ===== */
+.menu-categories button:focus-visible,
+.pizza-card button:focus-visible,
+.side-card button:focus-visible,
+.drink-card button:focus-visible,
+dialog button:focus-visible {
+    outline: 3px solid #fbbf24;
+    outline-offset: 3px;
+}
+
+/* ===== MOBILE BUTTONS ===== */
+@media (max-width: 480px) {
+    .menu-categories {
+        gap: 8px;
+    }
+
+    .menu-categories button {
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+
+    .pizza-card button,
+    .side-card button,
+    .drink-card button {
+        width: 100%;
+        padding: 10px 8px;
+    }
+}
+
+
+
+
+
+
+/* ===== PIZZA SIZE, QUANTITY & INGREDIENTS ===== */
+
+/* Labels */
+.pizza-card label,
+.side-card label,
+.drink-card label,
+dialog label,
+.pizza-dialog-content label {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    color: #333333;
+    margin: 14px 0 6px;
+}
+
+/* Dropdowns: Choose size and ingredients */
+.pizza-card select,
+.side-card select,
+.drink-card select,
+dialog select,
+.pizza-dialog-content select {
+    display: block;
+    width: 100%;
+    padding: 11px 38px 11px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background-color: #fffaf5;
+    color: #333333;
+    font-size: 15px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Quantity fields */
+.pizza-card input[type="number"],
+.side-card input[type="number"],
+.drink-card input[type="number"],
+dialog input[type="number"],
+.pizza-dialog-content input[type="number"] {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Highlight fields when selected */
+.pizza-card select:focus,
+.side-card select:focus,
+.drink-card select:focus,
+dialog select:focus,
+.pizza-dialog-content select:focus,
+.pizza-card input:focus,
+.side-card input:focus,
+.drink-card input:focus,
+dialog input:focus,
+.pizza-dialog-content input:focus {
+    outline: none;
+    border-color: #b91c1c;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.15);
+}
+
+
+.ingredients {
+   
+    text-align: left;
+    margin: 0px;
+    padding: 20px;
+    background: #fffaf5;
+    border: 2px solid #eadfd5;
+    border-radius: 10px;
+   
+    font-weight: 500;
+    font-family: "Doppio One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+
+
+/* Smaller screens */
+@media (max-width: 480px) {
+    .ingredients-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+.menu-section:not([hidden]) {
+    display: block;
+}
+
+.menu-section[hidden] {
+    display: none !important;
+}
+
+.pizza-grid,
+.sides-grid,
+.drinks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.pizza-card img,
+.side-card img,
+.drink-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+}
+
+@media (max-width: 480px) {
+    .pizza-grid,
+    .sides-grid,
+    .drinks-grid {
+        gap: 10px;
+    }
+}
