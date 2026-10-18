@@ -1,37 +1,87 @@
+
 {% extends "base.html" %}
 
-{% block title %} Home - Dream Pizzas {% endblock %}
-
-
+{% block title %}Menu - Dream Pizzas{% endblock %}
 
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Actor&family=Doppio+One&family=Petit+Formal+Script&family=Tilt+Neon&display=swap" rel="stylesheet">
-</head>
 
 
+<div class="pizza-grid">
+    {% for item in pizza %}
+
+        {% set image_file = 'pizza.png' %}
+        {% if item.pizza_name == 'Dreami Pepperoni' %}
+            {% set image_file = 'pepperoni.png' %}
+        {% elif item.pizza_name == 'Cheesy Wonder' %}
+            {% set image_file = 'cheesepizza.png' %}
+        {% elif item.pizza_name == 'Tropical Rest' %}
+            {% set image_file = 'hawaiian.png' %}
+        {% elif item.pizza_name == 'Meat Lovers Dream' %}
+            {% set image_file = 'meatlover.png' %}
+        {% endif %}
+
+        <div class="pizza-card">
+            <img
+                class="pizza-image"
+                src="{{ url_for('static', filename='images/' ~ image_file) }}"
+                alt="{{ item.pizza_name }}"
+            >
+
+            <h2>{{ item.pizza_name }}</h2>
+
+            <p class="pizza-price">
+                ${{ "%.2f"|format(item.available_sizes[0].price) }}
+                – ${{ "%.2f"|format(item.available_sizes[-1].price) }}
+            </p>
+
+            <h3>Ingredients</h3>
+            <ul>
+                {% for ingredient in item.ingredients %}
+                    <li>{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+
+            <form action="{{ url_for('add_pizza') }}" method="POST">
+                <label for="pizza-size-{{ loop.index }}">
+                    Choose size:
+                </label>
+
+                <select id="pizza-size-{{ loop.index }}"
+                        name="pizza_id" required>
+                    {% for select in item.available_sizes %}
+                        <option value="{{ item.pizza_name }}_{{ select.size }}_{{ select.price }}">
+                            {{ select.size }} - ${{ "%.2f"|format(select.price) }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit">Add to order</button>
+            </form>
+        </div>
+
+    {% endfor %}
+</div>
 
 
-<body>
-    <main>
+<div class="customer_cart">
+    <h2>Your Order</h2>
+    <h3>Pizzas</h3>
 
-   <div class="pepperoni">
-   
-    </div>
-    </main>
-</body>
+    {% if cart_pizza %}
+        <ul>
+            {% for key, details in cart_pizza.items() %}
+                <li>
+                    <strong>{{ details['name'] }} ({{ details['size'] }})</strong>
+                    <p>Quantity: {{ details['quantity'] }}</p>
+                    <p>Price: ${{ "%.2f"|format(details['price']) }}</p>
+                    <p>Subtotal: ${{ "%.2f"|format(details['quantity'] * details['price']) }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No pizza added yet.</p>
+    {% endif %}
+</div>
 
-
-
-</html>
 {% endblock %}

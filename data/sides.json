@@ -6,7 +6,7 @@
     },
 
       {
-        "side_name": "Chips",
+        "side_name": "Fries",
         "price": 2.50
     },
 
@@ -16,8 +16,26 @@
     },
 
        {
-        "side_name": "Sauce",
-        "price": 0.50
+        "side_name": "Sauces",
+        "price": 0.50,
+        "avaliable_sauces": [
+    {
+        "Sauce": "Tomato Sauce"
+        },
+
+    {
+        "Sauce": "Signature Dream Sauce"
+        },
+
+
+    {
+        "Sauce": "Mayo"
+        },
+
+      {
+        "Sauce": "BBQ"
+        }
+        ]
     }
 
 

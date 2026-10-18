@@ -1,47 +1,25 @@
+
 {% extends "base.html" %}
 
-{% block title %} Home - Dream Pizzas {% endblock %}
-
-
+{% block title %}Home - Dream Pizzas{% endblock %}
 
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Actor&family=Doppio+One&family=Petit+Formal+Script&family=Tilt+Neon&display=swap" rel="stylesheet">
-</head>
-
-
-
-
-<body>
- 
-    
-    
-    <main>
-
-         <p id=dream>PIZZAS YOU <br>DREAM OF</p>
+<main>
+    <p id="dream">PIZZAS YOU <br>DREAM OF</p>
 
     <div class="pizza_display">
-        <a href="{{ url_for('menu') }}"><img src="{{ url_for('static', filename='images/pizza.png') }}" alt="pizza-img"></a>
-        
+        <a href="{{ url_for('menu') }}">
+            <img src="{{ url_for('static', filename='images/pizza.png') }}"
+                 alt="pizza-img">
+        </a>
+
+        <div class="pizza_words">
+            <span>Click on the pizza!</span>
+            <span>For Delicious Comforting Pizza!</span>
+            <span>Freshly baked!</span>
+        </div>
     </div>
-   
+</main>
 
-   
-
-    </main>
-</body>
-
-
-
-</html>
 {% endblock %}

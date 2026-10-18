@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    
     <title>{% block title %}Dream Pizzas{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Actor&family=Doppio+One&family=Petit+Formal+Script&family=Tilt+Neon&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
 
-    <div class="dropdown">
-        <button>Nav</button>
+    
+   
         <div class="content">
             <a href="{{ url_for('index') }}">Home</a>
             <a href="{{ url_for('menu') }}">Menu</a>
             <a href="{{ url_for('order') }}">Order</a>
-                </div>  
-        </div>
+        </div>  
+   
 
 
     <header>

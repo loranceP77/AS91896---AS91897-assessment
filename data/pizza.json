@@ -1,7 +1,13 @@
 [
     
         {
-        "pizza_name": "Pepperoni",
+        "pizza_name": "Dreami Pepperoni",
+        "ingredients": [
+            "Tomato Sauce",
+            "Mozzarella Cheese",
+            "Pepperoni",
+            "Signature Dream Sauce"
+                       ],
         "category": "pizza",
         "available_sizes": [
     {
@@ -30,7 +36,12 @@
 
 
     {
-        "pizza_name": "Cheesy Garlic",
+        "pizza_name": "Cheesy Wonder",
+        "ingredients": [
+            "Tomato Sauce",
+            "Mozzarella Cheese",
+            "Signature Dream Sauce"
+                       ],
         "category": "pizza",
         "available_sizes": [
     {
@@ -58,7 +69,14 @@
 
 
     {
-        "pizza_name": "Meat lovers",
+        "pizza_name": "Tropical Rest",
+        "ingredients": [
+            "Tomato Sauce",
+            "Mozzarella Cheese",
+            "Pineapple",
+            "Ham",
+            "Signature Dream Sauce"
+                       ],
         "category": "pizza",
         "available_sizes": [
     {
@@ -86,7 +104,15 @@
 
 
    {
-        "pizza_name": "Ham n cheese",
+        "pizza_name": "Meat Lovers Dream",
+        "ingredients": [
+            "Tomato Sauce",
+            "Mozzarella Cheese",
+            "Pepperoni",
+            "Chicken",
+            "Beef",
+            "Signature Dream Sauce"
+                       ],
         "category": "pizza",
         "available_sizes": [
     {
