@@ -1,19 +1,24 @@
-
 {% extends "base.html" %}
 
 {% block title %}Home - Dream Pizzas{% endblock %}
 
 {% block content %}
 
+<!-- Main content container for the home page -->
 <main>
+    <!-- Main catchy tagline displayed on the homepage -->
     <p id="dream">PIZZAS YOU <br>DREAM OF</p>
 
+    <!-- Container holding the clickable pizza image and descriptive text -->
     <div class="pizza_display">
+        <!-- Wraps the pizza image in a link that navigates to the 'menu' route using Flask's url_for -->
         <a href="{{ url_for('menu') }}">
+            <!-- Displays the pizza image from the static folder -->
             <img src="{{ url_for('static', filename='images/pizza.png') }}"
                  alt="pizza-img">
         </a>
 
+        <!-- Informational text bubbles/spans next to or around the pizza display -->
         <div class="pizza_words">
             <span>Click on the pizza!</span>
             <span>For Delicious Comforting Pizza!</span>

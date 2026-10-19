@@ -1,11 +1,10 @@
-
 {% extends "base.html" %}
 
 {% block title %}Menu - Dream Pizzas{% endblock %}
 
 {% block content %}
 
-
+<!-- Navigation buttons to switch between menu categories -->
 <div class="menu-categories">
     <button type="button" onclick="showSection('pizza-section')">
         Pizza
@@ -22,14 +21,16 @@
 
 
 
-<!-- PIZZA SECTION -->
+<!-- ================= PIZZA SECTION ================= -->
 <section id="pizza-section" class="menu-section">
     
-
     <div class="pizza-grid">
+        <!-- Loop through each pizza item passed from the backend -->
         {% for item in pizza %}
+            <!-- Set a default fallback image -->
             {% set image_file = 'pizza.png' %}
 
+            <!-- Match the pizza name to its specific image asset -->
             {% if item.pizza_name == 'Dreami Pepperoni' %}
                 {% set image_file = 'pepperoni.png' %}
             {% elif item.pizza_name == 'Cheesy Wonder' %}
@@ -41,6 +42,7 @@
             {% endif %}
 
             <div class="pizza-card">
+                <!-- Render the dynamic pizza image -->
                 <img
                     class="pizza-image"
                     src="{{ url_for('static', filename='images/' ~ image_file) }}"
@@ -49,28 +51,37 @@
 
                 <h3>{{ item.pizza_name }}</h3>
 
+                <!-- Display the price range from the smallest to largest available size -->
                 <p class="pizza-price">
-                    ${{ "%.2f"|format(item.price|float) }}
+                    ${{ "%.2f"|format(item.available_sizes[0].price) }}
+                    – ${{ "%.2f"|format(item.available_sizes[-1].price) }}
                 </p>
 
                 <h4>Ingredients</h4>
                 <ul class="ingredients">
+                    <!-- Loop through and list all ingredients for the pizza -->
                     {% for ingredient in item.ingredients %}
                         <li>{{ ingredient }}</li>
                     {% endfor %}
                 </ul>
 
+                <!-- Form to submit the selected pizza size and quantity to the order -->
                 <form action="{{ url_for('add_pizza') }}" method="POST">
-                    <input
-                        type="hidden"
-                        name="pizza_id"
-                        value="{{ item.pizza_name }}_{{ item.price }}"
-                    >
-
-                    <label for="pizza-quantity-{{ loop.index }}">
-                        Quantity:
+                    <label for="pizza-size-{{ loop.index }}">
+                        Choose size:
                     </label>
 
+                    <!-- Dropdown containing available sizes and prices -->
+                    <select id="pizza-size-{{ loop.index }}"
+                            name="pizza_id" required>
+                        {% for select in item.available_sizes %}
+                            <option value="{{ item.pizza_name }}_{{ select.size }}_{{ select.price }}">
+                                {{ select.size }} - ${{ "%.2f"|format(select.price) }}
+                            </option>
+                        {% endfor %}
+                    </select>
+
+                    <!-- Quantity input field -->
                     <input
                         id="pizza-quantity-{{ loop.index }}"
                         type="number"
@@ -88,14 +99,17 @@
 </section>
 
 
-<!-- SIDES SECTION -->
+<!-- ================= SIDES SECTION ================= -->
 <section id="sides-section" class="menu-section" hidden>
     <h2>Sides</h2>
 
     <div class="sides-grid">
+        <!-- Loop through each side item -->
         {% for item in sides %}
+            <!-- Set default side image -->
             {% set image_file = 'garlicbread.png' %}
 
+            <!-- Case-insensitive check to assign the correct side image -->
             {% if item.side_name|lower == 'garlic bread' %}
                 {% set image_file = 'garlicbread.png' %}
             {% elif item.side_name|lower == 'chips' %}
@@ -113,9 +127,12 @@
                 >
 
                 <h3>{{ item.side_name }}</h3>
+                <!-- Format the side price to 2 decimal places -->
                 <p>${{ "%.2f"|format(item.price|float) }}</p>
 
+                <!-- Form to add the side item to the order -->
                 <form action="{{ url_for('add_sides') }}" method="POST">
+                    <!-- Hidden input storing side details and price -->
                     <input
                         type="hidden"
                         name="sides_id"
@@ -140,15 +157,18 @@
 </section>
 
 
-<!-- DRINKS SECTION -->
+<!-- ================= DRINKS SECTION ================= -->
 <section id="drinks-section" class="menu-section" hidden>
     <h2>Drinks</h2>
 
     <div class="drinks-grid">
+        <!-- Loop through each drink item -->
         {% for item in drink %}
+            <!-- Handle data safely in case drink_name is passed as a list/sequence -->
             {% set drink_name = item.drink_name[0] if item.drink_name is sequence and item.drink_name is not string else item.drink_name %}
             {% set image_file = 'water.png' %}
 
+            <!-- Case-insensitive check to match drink name to its image -->
             {% if drink_name|lower == 'coke' %}
                 {% set image_file = 'coke.png' %}
             {% elif drink_name|lower == 'sprite' %}
@@ -167,6 +187,7 @@
 
                 <h3>{{ drink_name }}</h3>
 
+                <!-- Form to select drink size and quantity -->
                 <form action="{{ url_for('add_drink') }}" method="POST">
                     <label for="drink-size-{{ loop.index }}">
                         Choose size:
@@ -174,6 +195,7 @@
 
                     <select id="drink-size-{{ loop.index }}"
                             name="drink_id" required>
+                        <!-- Loop through available drink sizes, handling potential sequence wrapping -->
                         {% for size_option in item.available_sizes %}
                             {% set size_name = size_option.size[0] if size_option.size is sequence and size_option.size is not string else size_option.size %}
                             {% set size_price = size_option.price[0] if size_option.price is sequence and size_option.price is not string else size_option.price %}
@@ -199,12 +221,16 @@
 </section>
 
 
+<!-- ================= CLIENT-SIDE SCRIPT ================= -->
 <script>
+    // Function to toggle visibility between menu categories (Pizza, Sides, Drinks)
     function showSection(sectionId) {
+        // Hide all menu sections
         document.querySelectorAll('.menu-section').forEach(function(section) {
             section.hidden = true;
         });
 
+        // Find the selected section by its ID and make it visible
         const selectedSection = document.getElementById(sectionId);
 
         if (selectedSection) {
@@ -212,6 +238,5 @@
         }
     }
 </script>
-
 
 {% endblock %}

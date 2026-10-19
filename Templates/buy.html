@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - Dream Pizzas{% endblock %}
+
+{% block content %}
+
+<div class="checkout-container">
+    <h2 class="checkout-title">Review Your Order</h2>
+
+    <form method="POST">
+        <!-- Scrollable White Box for Order Summary -->
+        <div class="order-summary-box">
+            
+            {# Initialize a mutable namespace variable to calculate the total price across items #}
+            {% set total = namespace(price=0) %}
+
+            <!-- Pizzas Section -->
+            {% if cart_pizza %}
+                {% for key, item in cart_pizza.items() %}
+                    {# Calculate item subtotal and add it to the cumulative total price #}
+                    {% set subtotal_item = item.quantity * item.price %}
+                    {% set total.price = total.price + subtotal_item %}
+                    
+                    {# Match each pizza name to its corresponding image file asset #}
+                    {% set img_file = 'pizza.png' %}
+                    {% if item.name == 'Dreami Pepperoni' %}
+                        {% set img_file = 'pepperoni.png' %}
+                    {% elif item.name == 'Cheesy Wonder' %}
+                        {% set img_file = 'cheesepizza.png' %}
+                    {% elif item.name == 'Tropical Rest' %}
+                        {% set img_file = 'hawaiian.png' %}
+                    {% elif item.name == 'Meat Lovers Dream' %}
+                        {% set img_file = 'meatlover.png' %}
+                    {% endif %}
+
+                    <div class="cart-item-row">
+                        <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name }}" class="cart-item-img">
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">{{ item.name }} ({{ item.size }})</h4>
+                            <p class="cart-item-subtext">
+                                Qty: {{ item.quantity }} | Subtotal: ${{ "%.2f"|format(subtotal_item) }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Drinks Section -->
+            {% if cart_drink %}
+                {% for key, item in cart_drink.items() %}
+                    {% set subtotal_item = item.quantity * item.price %}
+                    {% set total.price = total.price + subtotal_item %}
+                    <div class="cart-item-row">
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">🥤 {{ item.name }} ({{ item.size }})</h4>
+                            <p class="cart-item-subtext">
+                                Qty: {{ item.quantity }} | Subtotal: ${{ "%.2f"|format(subtotal_item) }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Sides Section -->
+            {% if cart_sides %}
+                {% for key, item in cart_sides.items() %}
+                    {% set subtotal_item = item.quantity * item.price %}
+                    {% set total.price = total.price + subtotal_item %}
+                    <div class="cart-item-row">
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">🍟 {{ item.name }}</h4>
+                            <p class="cart-item-subtext">
+                                Qty: {{ item.quantity }} | Subtotal: ${{ "%.2f"|format(subtotal_item) }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {# Display fallback message if all cart dictionaries are empty #}
+            {% if not cart_pizza and not cart_drink and not cart_sides %}
+                <p class="empty-cart-text">Your cart is empty.</p>
+            {% endif %}
+        </div>
+
+        <!-- Order Option: Pickup or Delivery radio buttons -->
+        <div class="form-section">
+            <label class="form-label-bold">Order Type:</label>
+            <label class="radio-label">
+                <input type="radio" name="order_type" value="pickup" checked onclick="toggleOrderType()"> Pick Up
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="order_type" value="delivery" onclick="toggleOrderType()"> Delivery (+$3.00)
+            </label>
+        </div>
+
+        <!-- Customer Information Inputs -->
+        <div class="form-section">
+            <h4 class="section-subtitle">Customer Details</h4>
+            
+            <div class="form-group">
+                <label class="form-label">Full Name:</label>
+                <input type="text" name="customer_name" required class="form-input">
+            </div>
+
+            {# Delivery fields container starts hidden; revealed via JavaScript if delivery is selected #}
+            <div id="delivery-fields" class="hidden">
+                <div class="form-group">
+                    <label class="form-label">Delivery Address:</label>
+                    <input type="text" name="address" id="address-input" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number:</label>
+                    <input type="tel" name="phone" id="phone-input" class="form-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Display with a data attribute storing the base subtotal for JavaScript calculations -->
+        <div class="total-container">
+            <h3 id="cart-data" data-subtotal="{{ subtotal if subtotal is defined else total.price }}">
+                Total: $<span id="total-display">{{ "%.2f"|format(subtotal if subtotal is defined else total.price) }}</span>
+            </h3>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="button-row">
+            <a href="{{ url_for('menu') }}" class="back-link">Back to Menu</a>
+            <button type="submit" class="submit-btn">Complete Order</button>
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript to dynamically update the grand total and toggle required delivery fields -->
+<script>
+    // Grab the base subtotal from the hidden data attribute
+    const cartElement = document.getElementById('cart-data');
+    const baseSubtotal = parseFloat(cartElement.dataset.subtotal) || 0;
+    
+    function toggleOrderType() {
+        const orderType = document.querySelector('input[name="order_type"]:checked').value;
+        const deliveryFields = document.getElementById('delivery-fields');
+        const addressInput = document.getElementById('address-input');
+        const phoneInput = document.getElementById('phone-input');
+        const totalDisplay = document.getElementById('total-display');
+
+        // Add or remove delivery fees and form requirements based on user choice
+        if (orderType === 'delivery') {
+            deliveryFields.classList.remove('hidden');
+            addressInput.required = true;
+            phoneInput.required = true;
+            const newTotal = baseSubtotal + 3.00;
+            totalDisplay.innerText = newTotal.toFixed(2);
+        } else {
+            deliveryFields.classList.add('hidden');
+            addressInput.required = false;
+            phoneInput.required = false;
+            totalDisplay.innerText = baseSubtotal.toFixed(2);
+        }
+    }
+</script>
+
+{% endblock %}

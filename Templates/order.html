@@ -1,68 +1,129 @@
 {% extends "base.html" %}
 
-{% block title %}Menu - Dream Pizzas{% endblock %}
+{% block title %}Your Order - Dream Pizzas{% endblock %}
 
 {% block content %}
 
-<div class="customer_cart">
-    <h2>Your Order</h2>
+<div class="customer-cart-container">
+    <h2 class="cart-title">Your Order</h2>
 
+    <!-- Initialize a mutable namespace object to keep track of the cumulative order total across different categories -->
     {% set total = namespace(price=0) %}
 
-    <h3>Pizzas</h3>
-    {% if cart_pizza %}
-        {% for key, item in cart_pizza.items() %}
-            {% set subtotal = item.quantity * item.price %}
-            {% set total.price = total.price + subtotal %}
+    <!-- Scrollable White Box for Order Summary -->
+    <div class="cart-scroll-box">
+        
+        <!-- Pizzas Section -->
+        <h3 class="cart-section-heading">Pizzas</h3>
+        {% if cart_pizza %}
+            <!-- Loop through each pizza item stored in the cart dictionary -->
+            {% for key, item in cart_pizza.items() %}
+                <!-- Calculate subtotal for the current pizza and add it to the running total -->
+                {% set subtotal = item.quantity * item.price %}
+                {% set total.price = total.price + subtotal %}
+                
+                <!-- Determine the correct product image filename based on the pizza name -->
+                {% set img_file = 'pizza.png' %}
+                {% if item.name == 'Dreami Pepperoni' %}
+                    {% set img_file = 'pepperoni.png' %}
+                {% elif item.name == 'Cheesy Wonder' %}
+                    {% set img_file = 'cheesepizza.png' %}
+                {% elif item.name == 'Tropical Rest' %}
+                    {% set img_file = 'hawaiian.png' %}
+                {% elif item.name == 'Meat Lovers Dream' %}
+                    {% set img_file = 'meatlover.png' %}
+                {% endif %}
 
-            <p>
-                {{ item.name }} ({{ item.size }})<br>
-                Quantity: {{ item.quantity }}<br>
-                ${{ "%.2f"|format(item.price) }} each<br>
-                Subtotal: ${{ "%.2f"|format(subtotal) }}
-            </p>
-        {% endfor %}
-    {% else %}
-        <p>No pizzas added yet.</p>
-    {% endif %}
+                <!-- Render individual pizza row with image, details, and remove link -->
+                <div class="cart-row">
+                    <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name }}" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <h4 class="cart-item-heading">{{ item.name }} ({{ item.size }})</h4>
+                        <p class="cart-item-details">
+                            Quantity: {{ item.quantity }} | ${{ "%.2f"|format(item.price) }} each<br>
+                            Subtotal: ${{ "%.2f"|format(subtotal) }}
+                        </p>
+                    </div>
+                    <div>
+                        <!-- Link to remove this specific item from the cart -->
+                        <a href="{{ url_for('remove_from_cart', category='pizza', item=key) }}" class="remove-link">Remove</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Fallback text displayed if no pizzas are currently in the cart -->
+            <p class="empty-text">No pizzas added yet.</p>
+        {% endif %}
 
-    <h3>Drinks</h3>
-    {% if cart_drink %}
-        {% for key, item in cart_drink.items() %}
-            {% set subtotal = item.quantity * item.price %}
-            {% set total.price = total.price + subtotal %}
+        <!-- Drinks Section -->
+        <h3 class="cart-section-heading-spaced">Drinks</h3>
+        {% if cart_drink %}
+            <!-- Loop through each drink item in the cart -->
+            {% for key, item in cart_drink.items() %}
+                {% set subtotal = item.quantity * item.price %}
+                {% set total.price = total.price + subtotal %}
 
-            <p>
-                {{ item.name }} ({{ item.size }})<br>
-                Quantity: {{ item.quantity }}<br>
-                Subtotal: ${{ "%.2f"|format(subtotal) }}
-            </p>
-        {% endfor %}
-    {% else %}
-        <p>No drinks added yet.</p>
-    {% endif %}
+                <!-- Render drink row -->
+                <div class="cart-row">
+                    <div class="cart-item-info">
+                        <h4 class="cart-item-heading">🥤 {{ item.name }} ({{ item.size }})</h4>
+                        <p class="cart-item-details">
+                            Quantity: {{ item.quantity }} | ${{ "%.2f"|format(item.price) }} each<br>
+                            Subtotal: ${{ "%.2f"|format(subtotal) }}
+                        </p>
+                    </div>
+                    <div>
+                        <a href="{{ url_for('remove_from_cart', category='drink', item=key) }}" class="remove-link">Remove</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-text">No drinks added yet.</p>
+        {% endif %}
 
-    <h3>Sides</h3>
-    {% if cart_sides %}
-        {% for key, item in cart_sides.items() %}
-            {% set subtotal = item.quantity * item.price %}
-            {% set total.price = total.price + subtotal %}
+        <!-- Sides Section -->
+        <h3 class="cart-section-heading-spaced">Sides</h3>
+        {% if cart_sides %}
+            <!-- Loop through each side item in the cart -->
+            {% for key, item in cart_sides.items() %}
+                {% set subtotal = item.quantity * item.price %}
+                {% set total.price = total.price + subtotal %}
 
-            <p>
-                {{ item.name }}<br>
-                Quantity: {{ item.quantity }}<br>
-                Subtotal: ${{ "%.2f"|format(subtotal) }}
-            </p>
-        {% endfor %}
-    {% else %}
-        <p>No sides added yet.</p>
-    {% endif %}
+                <!-- Render side row -->
+                <div class="cart-row">
+                    <div class="cart-item-info">
+                        <h4 class="cart-item-heading">🍟 {{ item.name }}</h4>
+                        <p class="cart-item-details">
+                            Quantity: {{ item.quantity }} | ${{ "%.2f"|format(item.price) }} each<br>
+                            Subtotal: ${{ "%.2f"|format(subtotal) }}
+                        </p>
+                    </div>
+                    <div>
+                        <a href="{{ url_for('remove_from_cart', category='sides', item=key) }}" class="remove-link">Remove</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-text">No sides added yet.</p>
+        {% endif %}
 
-    <hr>
+    </div>
 
-    <h2>Total: ${{ "%.2f"|format(total.price) }}</h2>
+    <!-- Total Displayed Outside the Box (formats the accumulated total namespace to 2 decimal places) -->
+    <div class="total-display-container">
+        <h2>Total: ${{ "%.2f"|format(total.price) }}</h2>
+    </div>
 
-    <a href="{{ url_for('menu') }}">Back to Menu</a>
+    <!-- Navigation Buttons for returning to the menu or proceeding to checkout -->
+    <div class="cart-action-row">
+        <a href="{{ url_for('menu') }}" class="menu-link">Back to Menu</a>
+        <a href="{{ url_for('buy') }}" style="text-decoration: none;">
+            <button class="purchase-btn">
+                Proceed To Purchase
+            </button>
+        </a>
+    </div>
+
 </div>
 
 {% endblock %}
