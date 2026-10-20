@@ -55,6 +55,7 @@
             <p class="empty-text">No pizzas added yet.</p>
         {% endif %}
 
+
         <!-- Drinks Section -->
         <h3 class="cart-section-heading-spaced">Drinks</h3>
         {% if cart_drink %}
@@ -63,10 +64,23 @@
                 {% set subtotal = item.quantity * item.price %}
                 {% set total.price = total.price + subtotal %}
 
-                <!-- Render drink row -->
+                <!-- Determine drink image filename -->
+                {% set img_file = 'drink.png' %}
+                {% set drink_name = item.name|default(item.drink_name, true)|string|lower %}
+                {% if 'coke' in drink_name %}
+                    {% set img_file = 'coke.png' %}
+                {% elif 'sprite' in drink_name %}
+                    {% set img_file = 'sprite.png' %}
+                {% elif 'pepsi' in drink_name %}
+                    {% set img_file = 'pepsi.png' %}
+                {% elif 'water' in drink_name %}
+                    {% set img_file = 'water.png' %}
+                {% endif %}
+            
                 <div class="cart-row">
+                    <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name|default(item.drink_name, true) }}" class="cart-item-image">
                     <div class="cart-item-info">
-                        <h4 class="cart-item-heading">🥤 {{ item.name }} ({{ item.size }})</h4>
+                        <h4 class="cart-item-heading">{{ item.name|default(item.drink_name, true) }}</h4>
                         <p class="cart-item-details">
                             Quantity: {{ item.quantity }} | ${{ "%.2f"|format(item.price) }} each<br>
                             Subtotal: ${{ "%.2f"|format(subtotal) }}
@@ -81,6 +95,7 @@
             <p class="empty-text">No drinks added yet.</p>
         {% endif %}
 
+        
         <!-- Sides Section -->
         <h3 class="cart-section-heading-spaced">Sides</h3>
         {% if cart_sides %}
@@ -89,10 +104,23 @@
                 {% set subtotal = item.quantity * item.price %}
                 {% set total.price = total.price + subtotal %}
 
-                <!-- Render side row -->
+                <!-- Determine side image filename -->
+                {% set img_file = 'side.png' %}
+                {% set side_name = item.name|default(item.side_name, true)|string|lower %}
+                {% if 'garlic bread' in side_name %}
+                    {% set img_file = 'garlicbread.png' %}
+                {% elif 'fries' in side_name %}
+                    {% set img_file = 'fries.png' %}
+                {% elif 'onion rings' in side_name %}
+                    {% set img_file = 'onionrings.png' %}
+                {% elif 'sauce' in side_name %}
+                    {% set img_file = 'sauces.png' %}
+                {% endif %}
+            
                 <div class="cart-row">
+                    <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name|default(item.side_name, true) }}" class="cart-item-image">
                     <div class="cart-item-info">
-                        <h4 class="cart-item-heading">🍟 {{ item.name }}</h4>
+                        <h4 class="cart-item-heading">{{ item.name|default(item.side_name, true) }}</h4>
                         <p class="cart-item-details">
                             Quantity: {{ item.quantity }} | ${{ "%.2f"|format(item.price) }} each<br>
                             Subtotal: ${{ "%.2f"|format(subtotal) }}
@@ -109,16 +137,16 @@
 
     </div>
 
-    <!-- Total Displayed Outside the Box (formats the accumulated total namespace to 2 decimal places) -->
+    <!-- Total Displayed Outside the Box -->
     <div class="total-display-container">
         <h2>Total: ${{ "%.2f"|format(total.price) }}</h2>
     </div>
 
-    <!-- Navigation Buttons for returning to the menu or proceeding to checkout -->
+    <!-- Navigation Buttons -->
     <div class="cart-action-row">
-        <a href="{{ url_for('menu') }}" class="menu-link">Back to Menu</a>
-        <a href="{{ url_for('buy') }}" style="text-decoration: none;">
-            <button class="purchase-btn">
+        <a href="{{ url_for('menu') }}">Back to menu</a>
+        <a href="{{ url_for('buy') }}">
+            <button class="purchase-button">
                 Proceed To Purchase
             </button>
         </a>

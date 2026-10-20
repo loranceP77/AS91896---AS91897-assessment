@@ -50,9 +50,24 @@
                 {% for key, item in cart_drink.items() %}
                     {% set subtotal_item = item.quantity * item.price %}
                     {% set total.price = total.price + subtotal_item %}
+                    
+                    {# Determine drink image filename #}
+                    {% set img_file = 'drink.png' %}
+                    {% set drink_name = item.name|default(item.drink_name, true)|string|lower %}
+                    {% if 'coke' in drink_name %}
+                        {% set img_file = 'coke.png' %}
+                    {% elif 'sprite' in drink_name %}
+                        {% set img_file = 'sprite.png' %}
+                    {% elif 'pepsi' in drink_name %}
+                        {% set img_file = 'pepsi.png' %}
+                    {% elif 'water' in drink_name %}
+                        {% set img_file = 'water.png' %}
+                    {% endif %}
+
                     <div class="cart-item-row">
+                        <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name|default(item.drink_name, true) }}" class="cart-item-img">
                         <div class="cart-item-details">
-                            <h4 class="cart-item-title">🥤 {{ item.name }} ({{ item.size }})</h4>
+                            <h4 class="cart-item-title">🥤 {{ item.name|default(item.drink_name, true) }}</h4>
                             <p class="cart-item-subtext">
                                 Qty: {{ item.quantity }} | Subtotal: ${{ "%.2f"|format(subtotal_item) }}
                             </p>
@@ -66,9 +81,24 @@
                 {% for key, item in cart_sides.items() %}
                     {% set subtotal_item = item.quantity * item.price %}
                     {% set total.price = total.price + subtotal_item %}
+                    
+                    {# Determine side image filename #}
+                    {% set img_file = 'side.png' %}
+                    {% set side_name = item.name|default(item.side_name, true)|string|lower %}
+                    {% if 'garlic bread' in side_name %}
+                        {% set img_file = 'garlicbread.png' %}
+                    {% elif 'fries' in side_name %}
+                        {% set img_file = 'fries.png' %}
+                    {% elif 'onion rings' in side_name %}
+                        {% set img_file = 'onionrings.png' %}
+                    {% elif 'sauce' in side_name %}
+                        {% set img_file = 'sauces.png' %}
+                    {% endif %}
+
                     <div class="cart-item-row">
+                        <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name|default(item.side_name, true) }}" class="cart-item-img">
                         <div class="cart-item-details">
-                            <h4 class="cart-item-title">🍟 {{ item.name }}</h4>
+                            <h4 class="cart-item-title">🍟 {{ item.name|default(item.side_name, true) }}</h4>
                             <p class="cart-item-subtext">
                                 Qty: {{ item.quantity }} | Subtotal: ${{ "%.2f"|format(subtotal_item) }}
                             </p>

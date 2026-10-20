@@ -21,7 +21,7 @@
 
 
 
-<!-- ================= PIZZA SECTION ================= -->
+<!-- PIZZA SECTION  -->
 <section id="pizza-section" class="menu-section">
     
     <div class="pizza-grid">
@@ -99,9 +99,9 @@
 </section>
 
 
-<!-- ================= SIDES SECTION ================= -->
+<!-- SIDES SECTION -->
 <section id="sides-section" class="menu-section" hidden>
-    <h2>Sides</h2>
+    
 
     <div class="sides-grid">
         <!-- Loop through each side item -->
@@ -112,12 +112,12 @@
             <!-- Case-insensitive check to assign the correct side image -->
             {% if item.side_name|lower == 'garlic bread' %}
                 {% set image_file = 'garlicbread.png' %}
-            {% elif item.side_name|lower == 'chips' %}
-                {% set image_file = 'chips.png' %}
+            {% elif item.side_name|lower == 'fries' %}
+                {% set image_file = 'fries.png' %}
             {% elif item.side_name|lower == 'onion rings' %}
                 {% set image_file = 'onionrings.png' %}
-            {% elif item.side_name|lower == 'sauce' %}
-                {% set image_file = 'sauce.png' %}
+            {% elif item.side_name|lower == 'sauces' %}
+                {% set image_file = 'sauces.png' %}
             {% endif %}
 
             <div class="side-card">
@@ -127,19 +127,30 @@
                 >
 
                 <h3>{{ item.side_name }}</h3>
-                <!-- Format the side price to 2 decimal places -->
+              
                 <p>${{ "%.2f"|format(item.price|float) }}</p>
-
-                <!-- Form to add the side item to the order -->
+              
                 <form action="{{ url_for('add_sides') }}" method="POST">
-                    <!-- Hidden input storing side details and price -->
-                    <input
-                        type="hidden"
-                        name="sides_id"
-                        value="{{ item.side_name }}_{{ item.price }}"
-                    >
+                    {% if item.avaliable_sauces %}
+                        <!-- Dropdown for choosing sauce flavor -->
+                        <label for="sauce-select-{{ loop.index }}"><h4>Choose sauce:</h4></label>
+                        <select id="sauce-select-{{ loop.index }}" name="sides_id" required>
+                            {% for sauce_option in item.avaliable_sauces %}
+                                <option value="{{ item.side_name }} - {{ sauce_option.Sauce }}_{{ item.price }}">
+                                    {{ sauce_option.Sauce }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <!-- Hidden input storing side details and price for regular sides -->
+                        <input
+                            type="hidden"
+                            name="sides_id"
+                            value="{{ item.side_name }}_{{ item.price }}"
+                        >
+                    {% endif %}
 
-                    <label for="sides-quantity-{{ loop.index }}">Quantity:</label>
+                    <label for="sides-quantity-{{ loop.index }}"><h4>Quantity:</h4></label>
                     <input
                         id="sides-quantity-{{ loop.index }}"
                         type="number"
@@ -157,9 +168,9 @@
 </section>
 
 
-<!-- ================= DRINKS SECTION ================= -->
+<!-- DRINKS SECTION -->
 <section id="drinks-section" class="menu-section" hidden>
-    <h2>Drinks</h2>
+   
 
     <div class="drinks-grid">
         <!-- Loop through each drink item -->
@@ -190,7 +201,7 @@
                 <!-- Form to select drink size and quantity -->
                 <form action="{{ url_for('add_drink') }}" method="POST">
                     <label for="drink-size-{{ loop.index }}">
-                        Choose size:
+                       <h4> Choose size: </h4>
                     </label>
 
                     <select id="drink-size-{{ loop.index }}"
@@ -207,7 +218,7 @@
                     </select>
 
                     <label for="drink-quantity-{{ loop.index }}">
-                        Quantity:
+                       <h4> Quantity: </h4>
                     </label>
                     <input id="drink-quantity-{{ loop.index }}"
                            type="number" name="quantity"
@@ -221,7 +232,7 @@
 </section>
 
 
-<!-- ================= CLIENT-SIDE SCRIPT ================= -->
+
 <script>
     // Function to toggle visibility between menu categories (Pizza, Sides, Drinks)
     function showSection(sectionId) {

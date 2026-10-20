@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <!-- Sets the page title; child templates can override this using the 'title' block -->
+    
     <title>{% block title %}Dream Pizzas{% endblock %}</title>
     
-    <!-- Meta tags for character encoding and mobile-friendly responsive design -->
+   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
@@ -20,7 +20,7 @@
 
 <body>
 
-    <!-- Jinja2 block to catch and display flashed messages (alerts/notifications) from Flask backend -->
+    <!-- displays alerts/notification messages -->
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <div class="alert">
@@ -31,20 +31,20 @@
       {% endif %}
     {% endwith %}
 
-    <!-- Navigation bar links using Flask's url_for to dynamically generate routes -->
-    <div class="content">
+    <!-- Navigation bar  -->
+    <div class="navigation">
         <a href="{{ url_for('index') }}">Home</a>
         <a href="{{ url_for('menu') }}">Menu</a>
         <a href="{{ url_for('order') }}">Order</a>
     </div>  
 
-    <!-- Website header containing the brand name and contact number -->
+    <!-- brand name and contact number -->
     <header>
         <div class="title">Dream Pizzas</div>
         <div class="phone_number">021 000 000</div>
     </header>
 
-    <!-- Main structural element where individual page contents are injected -->
+   
     <main>
         {% block content %}{% endblock %}
     </main>
