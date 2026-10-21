@@ -455,11 +455,6 @@ dialog input:focus,
 
 /* ----------------------------------------------------------- */
 /* order page */
-.customer-cart-container {
-    max-width: 600px;
-    margin: 30px auto;
-    font-family: Arial, sans-serif;
-}
 
 .cart-title {
     text-align: center;
@@ -786,4 +781,108 @@ h4 {
     margin-bottom: 10px;
     line-height: 1.1;
     user-select: none;;
+}
+
+
+/* ------------------------------------------------------------ */
+/* --- display order --- */
+
+.customer-cart-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: left; 
+}
+
+.customer-cart-container th {
+    background-color: #d9534f; 
+    color: #ffffff;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* --- Table Cells & Content --- */
+.display_orders_cell {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: #333333;
+    vertical-align: top;
+    font-family: "Doppio One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.customer-cart-container tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+
+.display_orders_cell ul {
+    margin: 0;
+    padding-left: 15px;
+}
+
+.display_orders_cell li {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #555555;
+    font-family: "Doppio One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+#submit-cancel {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: "Doppio One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#submit-cancel:hover {
+    background-color: #c0392b;
+}
+
+
+.customer-cart-container > p {
+    text-align: center;
+    font-size: 16px;
+    color: #666666;
+    margin-top: 30px;
+      
+}
+
+.customer-cart-container {
+    max-width: 1200px; 
+    margin: 30px auto;  
+    padding: 20px;
+    text-align: center;
+}
+
+.customer-cart-container .cart-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: "Doppio One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+th {
+  font-family: "Doppio One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }

@@ -22,21 +22,12 @@
                 {% set subtotal = item.quantity * item.price %}
                 {% set total.price = total.price + subtotal %}
                 
-                <!-- Determine the correct product image filename based on the pizza name -->
-                {% set img_file = 'pizza.png' %}
-                {% if item.name == 'Dreami Pepperoni' %}
-                    {% set img_file = 'pepperoni.png' %}
-                {% elif item.name == 'Cheesy Wonder' %}
-                    {% set img_file = 'cheesepizza.png' %}
-                {% elif item.name == 'Tropical Rest' %}
-                    {% set img_file = 'hawaiian.png' %}
-                {% elif item.name == 'Meat Lovers Dream' %}
-                    {% set img_file = 'meatlover.png' %}
-                {% endif %}
+                {% set image_path = item.picture if item.picture else 'images/pizza.png' %}
+                {% set filename_only = image_path.split('/')[-1] %}
 
                 <!-- Render individual pizza row with image, details, and remove link -->
                 <div class="cart-row">
-                    <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name }}" class="cart-item-image">
+                    <img src="{{ url_for('static', filename='images/' + filename_only) }}" alt="{{ item.name }}" class="cart-item-image">
                     <div class="cart-item-info">
                         <h4 class="cart-item-heading">{{ item.name }} ({{ item.size }})</h4>
                         <p class="cart-item-details">
@@ -64,21 +55,11 @@
                 {% set subtotal = item.quantity * item.price %}
                 {% set total.price = total.price + subtotal %}
 
-                <!-- Determine drink image filename -->
-                {% set img_file = 'drink.png' %}
-                {% set drink_name = item.name|default(item.drink_name, true)|string|lower %}
-                {% if 'coke' in drink_name %}
-                    {% set img_file = 'coke.png' %}
-                {% elif 'sprite' in drink_name %}
-                    {% set img_file = 'sprite.png' %}
-                {% elif 'pepsi' in drink_name %}
-                    {% set img_file = 'pepsi.png' %}
-                {% elif 'water' in drink_name %}
-                    {% set img_file = 'water.png' %}
-                {% endif %}
+                {% set image_path = item.picture if item.picture else 'images/water.png' %}
+                {% set filename_only = image_path.split('/')[-1] %}
             
                 <div class="cart-row">
-                    <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name|default(item.drink_name, true) }}" class="cart-item-image">
+                    <img src="{{ url_for('static', filename='images/' + filename_only) }}" alt="{{ item.name|default(item.drink_name, true) }}" class="cart-item-image">
                     <div class="cart-item-info">
                         <h4 class="cart-item-heading">{{ item.name|default(item.drink_name, true) }}</h4>
                         <p class="cart-item-details">
@@ -104,21 +85,11 @@
                 {% set subtotal = item.quantity * item.price %}
                 {% set total.price = total.price + subtotal %}
 
-                <!-- Determine side image filename -->
-                {% set img_file = 'side.png' %}
-                {% set side_name = item.name|default(item.side_name, true)|string|lower %}
-                {% if 'garlic bread' in side_name %}
-                    {% set img_file = 'garlicbread.png' %}
-                {% elif 'fries' in side_name %}
-                    {% set img_file = 'fries.png' %}
-                {% elif 'onion rings' in side_name %}
-                    {% set img_file = 'onionrings.png' %}
-                {% elif 'sauce' in side_name %}
-                    {% set img_file = 'sauces.png' %}
-                {% endif %}
+                {% set image_path = item.picture if item.picture else 'images/garlicbread.png' %}
+                {% set filename_only = image_path.split('/')[-1] %}
             
                 <div class="cart-row">
-                    <img src="{{ url_for('static', filename='images/' + img_file) }}" alt="{{ item.name|default(item.side_name, true) }}" class="cart-item-image">
+                    <img src="{{ url_for('static', filename='images/' + filename_only) }}" alt="{{ item.name|default(item.side_name, true) }}" class="cart-item-image">
                     <div class="cart-item-info">
                         <h4 class="cart-item-heading">{{ item.name|default(item.side_name, true) }}</h4>
                         <p class="cart-item-details">
@@ -144,7 +115,7 @@
 
     <!-- Navigation Buttons -->
     <div class="cart-action-row">
-        <a href="{{ url_for('menu') }}">Back to menu</a>
+        <a href="{{ url_for('menu') }}"><button>Back to menu</button></a>
         <a href="{{ url_for('buy') }}">
             <button class="purchase-button">
                 Proceed To Purchase

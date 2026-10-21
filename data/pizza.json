@@ -2,6 +2,7 @@
     
         {
         "pizza_name": "Dreami Pepperoni",
+        "picture": "static/images/pepperoni.png",
         "ingredients": [
             "Tomato Sauce",
             "Mozzarella Cheese",
@@ -37,6 +38,7 @@
 
     {
         "pizza_name": "Cheesy Wonder",
+        "picture": "static/images/cheesepizza.png",
         "ingredients": [
             "Tomato Sauce",
             "Mozzarella Cheese",
@@ -70,6 +72,7 @@
 
     {
         "pizza_name": "Tropical Rest",
+        "picture": "static/images/hawaiian.png",
         "ingredients": [
             "Tomato Sauce",
             "Mozzarella Cheese",
@@ -105,6 +108,7 @@
 
    {
         "pizza_name": "Meat Lovers Dream",
+        "picture": "static/images/meatlover.png",
         "ingredients": [
             "Tomato Sauce",
             "Mozzarella Cheese",

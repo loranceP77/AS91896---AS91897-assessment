@@ -2,6 +2,7 @@
 [
     {
         "drink_name": ["Coke"],
+         "picture": "static/images/coke.png",
         "category": ["soda"],
         "available_sizes": [
     {
@@ -25,6 +26,7 @@
 
     {
         "drink_name": ["Sprite"],
+         "picture": "static/images/sprite.png",
         "category": ["soda"],
         "available_sizes": [
     {
@@ -47,6 +49,7 @@
 
     {
         "drink_name": "Pepsi",
+        "picture": "static/images/pepsi.png",
         "category": "soda",
         "available_sizes": [
     {
@@ -70,6 +73,7 @@
 
    {
         "drink_name": ["Water"],
+         "picture": "static/images/water.png",
         "category": ["soda"],
         "available_sizes": [
     {

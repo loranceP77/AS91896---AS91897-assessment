@@ -23,29 +23,17 @@
 
 <!-- PIZZA SECTION  -->
 <section id="pizza-section" class="menu-section">
-    
     <div class="pizza-grid">
-        <!-- Loop through each pizza item passed from the backend -->
+   
         {% for item in pizza %}
-            <!-- Set a default fallback image -->
-            {% set image_file = 'pizza.png' %}
-
-            <!-- Match the pizza name to its specific image asset -->
-            {% if item.pizza_name == 'Dreami Pepperoni' %}
-                {% set image_file = 'pepperoni.png' %}
-            {% elif item.pizza_name == 'Cheesy Wonder' %}
-                {% set image_file = 'cheesepizza.png' %}
-            {% elif item.pizza_name == 'Tropical Rest' %}
-                {% set image_file = 'hawaiian.png' %}
-            {% elif item.pizza_name == 'Meat Lovers Dream' %}
-                {% set image_file = 'meatlover.png' %}
-            {% endif %}
+            <!-- Pull image from JSON item.picture, fallback to pizza.png if missing -->
+            {% set image_path = item.picture if item.picture else 'images/pizza.png' %}
 
             <div class="pizza-card">
                 <!-- Render the dynamic pizza image -->
                 <img
                     class="pizza-image"
-                    src="{{ url_for('static', filename='images/' ~ image_file) }}"
+                    src="{{ url_for('static', filename=image_path.replace('static/', '')) if not image_path.startswith('static/') else image_path }}"
                     alt="{{ item.pizza_name }}"
                 >
 
@@ -101,28 +89,15 @@
 
 <!-- SIDES SECTION -->
 <section id="sides-section" class="menu-section" hidden>
-    
-
     <div class="sides-grid">
         <!-- Loop through each side item -->
         {% for item in sides %}
-            <!-- Set default side image -->
-            {% set image_file = 'garlicbread.png' %}
-
-            <!-- Case-insensitive check to assign the correct side image -->
-            {% if item.side_name|lower == 'garlic bread' %}
-                {% set image_file = 'garlicbread.png' %}
-            {% elif item.side_name|lower == 'fries' %}
-                {% set image_file = 'fries.png' %}
-            {% elif item.side_name|lower == 'onion rings' %}
-                {% set image_file = 'onionrings.png' %}
-            {% elif item.side_name|lower == 'sauces' %}
-                {% set image_file = 'sauces.png' %}
-            {% endif %}
+            <!-- Pull image from JSON item.picture, fallback to garlicbread.png if missing -->
+            {% set image_path = item.picture if item.picture else 'images/garlicbread.png' %}
 
             <div class="side-card">
                 <img
-                    src="{{ url_for('static', filename='images/' ~ image_file) }}"
+                    src="{{ url_for('static', filename=image_path.replace('static/', '')) if not image_path.startswith('static/') else image_path }}"
                     alt="{{ item.side_name }}"
                 >
 
@@ -170,29 +145,18 @@
 
 <!-- DRINKS SECTION -->
 <section id="drinks-section" class="menu-section" hidden>
-   
-
     <div class="drinks-grid">
         <!-- Loop through each drink item -->
         {% for item in drink %}
             <!-- Handle data safely in case drink_name is passed as a list/sequence -->
             {% set drink_name = item.drink_name[0] if item.drink_name is sequence and item.drink_name is not string else item.drink_name %}
-            {% set image_file = 'water.png' %}
-
-            <!-- Case-insensitive check to match drink name to its image -->
-            {% if drink_name|lower == 'coke' %}
-                {% set image_file = 'coke.png' %}
-            {% elif drink_name|lower == 'sprite' %}
-                {% set image_file = 'sprite.png' %}
-            {% elif drink_name|lower == 'pepsi' %}
-                {% set image_file = 'pepsi.png' %}
-            {% elif drink_name|lower == 'water' %}
-                {% set image_file = 'water.png' %}
-            {% endif %}
+            
+            <!-- Pull image from JSON item.picture, fallback to water.png if missing -->
+            {% set image_path = item.picture if item.picture else 'images/water.png' %}
 
             <div class="drink-card">
                 <img
-                    src="{{ url_for('static', filename='images/' ~ image_file) }}"
+                    src="{{ url_for('static', filename=image_path.replace('static/', '')) if not image_path.startswith('static/') else image_path }}"
                     alt="{{ drink_name }}"
                 >
 

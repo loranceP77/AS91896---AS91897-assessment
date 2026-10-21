@@ -2,21 +2,26 @@
 
     {
         "side_name": "Garlic Bread",
+         "picture": "static/images/garlicbread.png",
         "price": 3.50
+        
     },
 
       {
         "side_name": "Fries",
+         "picture": "static/images/fries.png",
         "price": 2.50
     },
 
        {
         "side_name": "Onion Rings",
+         "picture": "static/images/onionrings.png",
         "price": 3.00
     },
 
        {
         "side_name": "Sauces",
+         "picture": "static/images/sauces.png",
         "price": 0.50,
         "avaliable_sauces": [
     {

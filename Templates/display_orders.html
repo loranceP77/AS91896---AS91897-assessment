@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmed Orders - Dream Pizzas{% endblock %}
+
+{% block content %}
+<div class="customer-cart-container">
+    <h2 class="cart-title">Confirmed Orders</h2>
+
+    {% if orders %}
+    <table>
+        <thead>
+            <tr>
+                <th>Invoice Number</th>
+                <th>Customer Name</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Pizza</th>
+                <th>Drinks</th>
+                <th>Sides</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>Cancel Order</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td class="display_orders_cell">{{order.invoice_number}}</td>
+                    <td class="display_orders_cell">{{order.customer_name}}</td>
+                    <td class="display_orders_cell">{{order.phone}}</td>
+                    <td class="display_orders_cell">{{order.address}}</td>
+                    
+                    <td class="display_orders_cell"> 
+                        {% if order.pizza %}
+                        <ul>
+                            {% for item in order.pizza.values() %}
+                            <li>
+                                <strong>{{item.name}}</strong> {{item.size}} 
+                                <br> 
+                                Quantity: {{item.quantity}} | Price: ${{"%.2f"|format(item.price)}} 
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            NONE
+                        {% endif %}
+                    </td>
+                     
+                    <td class="display_orders_cell">
+                        {% if order.drink %}
+                        <ul>
+                            {% for item in order.drink.values() %}
+                            <li>
+                                <strong>{{item.name}}</strong> {{item.size}} 
+                                <br> 
+                                Quantity: {{item.quantity}} | Price: ${{"%.2f"|format(item.price)}}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            NONE
+                        {% endif %}
+                    </td>
+
+                    <td class="display_orders_cell">
+                        {% if order.sides %}
+                        <ul>
+                            {% for item in order.sides.values() %}
+                            <li>
+                                <strong>{{item.name}}</strong>
+                                <br> 
+                                Quantity: {{item.quantity}} | Price: ${{"%.2f"|format(item.price)}}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            NONE
+                        {% endif %}
+                    </td>
+
+                    <td class="display_orders_cell">{{order.total}}</td>
+                    <td class="display_orders_cell">{{order.date}}</td>
+                    
+                    <td class="display_orders_cell">
+                        <form action="{{ url_for('cancel_saved_order', order_id=order.order_id) }}" method="post">
+                            <button type="submit" id="submit-cancel" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel Order</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No past orders found.</p>
+    {% endif %}
+</div>
+{% endblock %}

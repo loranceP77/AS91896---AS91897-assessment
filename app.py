@@ -53,20 +53,22 @@ def initialise_database():
         cursor = conn.cursor()
         cursor.execute(
             '''
-        CREATE TABLE IF NOT EXISTS orders (
-            order_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            invoice_number TEXT,
-            customer_name TEXT,
-            pizza TEXT,
-            drink TEXT,
-            side TEXT,
-            total REAL,
-            date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            CREATE TABLE IF NOT EXISTS orders (
+                order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                invoice_number TEXT,
+                customer_name TEXT,
+                pizza TEXT,
+                drink TEXT,
+                sides TEXT,  
+                total REAL,
+                address TEXT,
+                phone TEXT,
+                invoice_date TEXT,
+                date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
-        '''
+            '''
         )
         conn.commit()
-
 
 # --- FLASK ROUTES ---
 
@@ -81,6 +83,30 @@ def base():
     """Renders the base layout template."""
     return render_template('base.html')
 
+@app.route('/display_orders')
+def display_orders():
+    initialise_database()  
+    with sqlite3.connect('order.db') as conn:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM orders ORDER BY date DESC')
+        rows = cursor.fetchall()
+        orders = []
+        for row in rows:
+            orders.append({
+                'order_id': row['order_id'],
+                'invoice_number': row['invoice_number'],
+                'customer_name': row['customer_name'],
+                'phone': row['phone'],
+                'address': row['address'],
+                'pizza': json.loads(row['pizza'] or '{}'),
+                'drink': json.loads(row['drink'] or '{}'),
+                'sides': json.loads(row['sides'] or '{}'),
+                'total': row['total'],
+                'invoice_date': row['invoice_date']
+            })
+
+    return render_template("display_orders.html", orders=orders)
 
 @app.route('/menu')
 def menu():
@@ -225,6 +251,17 @@ def remove_from_cart(category, item):
 
     return redirect(url_for('order'))
 
+@app.route('/cancel_order/<int:order_id>', methods=['POST'])
+def cancel_saved_order(order_id):
+    """Deletes an order from the database based on its order_id."""
+    initialise_database()
+    with sqlite3.connect('order.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM orders WHERE order_id = ?', (order_id,))
+        conn.commit()
+
+    flash('Order successfully cancelled.')
+    return redirect(url_for('display_orders'))
 
 @app.route('/buy', methods=['GET', 'POST'])
 def buy():
@@ -232,6 +269,9 @@ def buy():
     cart_pizza = session.get('cart_pizza', {})
     cart_drink = session.get('cart_drink', {})
     cart_sides = session.get('cart_sides', {})
+    
+    # Fixed datetime method and strftime spelling
+    invoice_date = datetime.datetime.now().strftime('%y-%m-%d_%H-%M-%S')
 
     # Calculate subtotal across all cart categories
     subtotal = sum(
@@ -247,13 +287,39 @@ def buy():
     if request.method == 'POST':
         order_type = request.form.get('order_type')
         customer_name = request.form.get('customer_name')
-        address = request.form.get('address', '')
-        phone = request.form.get('phone', '')
+        
+        # Fixed request.form.get syntax from brackets [] to parentheses ()
+        address = request.form.get('address', '').title()
+        phone = request.form.get('phone')
 
-        final_total = subtotal
+        total = subtotal
         if order_type == 'delivery':
-            final_total += 3.00  # Add a $3 delivery fee
+            total += 3.00  # Add a $3 delivery fee
+   
+    # Calculate subtotal across all cart categories
+    subtotal = sum(
+        item['quantity'] * item['price'] for item in cart_pizza.values()
+    )
+    subtotal += sum(
+        item['quantity'] * item['price'] for item in cart_drink.values()
+    )
+    subtotal += sum(
+        item['quantity'] * item['price'] for item in cart_sides.values()
+    )
 
+    if request.method == 'POST':
+        order_type = request.form.get('order_type')
+        customer_name = request.form.get('customer_name')
+        address = request.form.get('address').title()
+        phone = request.form.get('phone').title()
+
+        total = subtotal
+        if order_type == 'delivery':
+            total += 3.00  # Add a $3 delivery fee
+    
+    
+    
+    
         # Format cart dictionaries into readable strings for database storage
         pizza_str = ', '.join(
             [f"{item['quantity']}x {key}" for key, item in cart_pizza.items()]
@@ -276,20 +342,22 @@ def buy():
             cursor = conn.cursor()
             cursor.execute(
                 '''
-                INSERT INTO orders (invoice_number, customer_name, pizza, drink, side, total)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO orders (invoice_number, customer_name, pizza, drink, sides, total, address, phone, invoice_date)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''',
                 (
                     invoice_number,
                     customer_name,
-                    pizza_str,
-                    drink_str,
-                    side_str,
-                    final_total,
+                    json.dumps(cart_pizza),
+                    json.dumps(cart_drink),
+                    json.dumps(cart_sides),
+                    total,
+                    address,
+                    phone,
+                    invoice_date,
                 ),
             )
-            conn.commit()
-
+            conn.commit() 
         # Clear out the user's shopping cart session after a successful order
         session.pop('cart_pizza', None)
         session.pop('cart_drink', None)
